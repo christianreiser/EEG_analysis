@@ -1,0 +1,5 @@
+https://github.com/christianreiser/course_eeg_WS2020/blob/main/exercises/ex2.ipynb
+
+If possible, provide feedback. Questions are in red.
+
+Thanks!
