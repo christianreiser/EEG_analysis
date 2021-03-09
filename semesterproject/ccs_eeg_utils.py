@@ -10,6 +10,21 @@ import scipy.ndimage
 import scipy.signal
 from numpy import sin as sin
 
+def save_plot(folder_name, subject_id):
+    """
+    saves the plot in './results/'+str(name), instead of showing it
+    creates the dir if not existent 
+    """
+    # create dir to save plots if not existent
+    if not os.path.exists('./results/'+str(folder)): 
+        os.makedirs('./results/'+str(folder))
+        
+    # save plot    
+    plt.savefig('./results/'+str(folder)+'/sub'+str(subject_id)+'.png')
+    
+    # don't display figure
+    plt.close() 
+
 def read_annotations_core(bids_path,raw):
     tsv=os.path.join(bids_path.directory,bids_path.update(suffix="events",extension=".tsv").basename)
     _handle_events_reading_core(tsv,raw)
