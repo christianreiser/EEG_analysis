@@ -10,18 +10,25 @@ import scipy.ndimage
 import scipy.signal
 from numpy import sin as sin
 
-def save_plot(folder_name, subject_id):
+import matplotlib
+import matplotlib.pyplot as plt
+matplotlib.use('Agg')
+
+
+
+def save_plot(name, bids_path):
     """
-    saves the plot in './results/'+str(name), instead of showing it
+    saves the plot in './../local/results/'+str(name), instead of showing it
     creates the dir if not existent 
     """
     # create dir to save plots if not existent
-    if not os.path.exists('./results/'+str(folder)): 
-        os.makedirs('./results/'+str(folder))
-        
-    # save plot    
-    plt.savefig('./results/'+str(folder)+'/sub'+str(subject_id)+'.png')
-    
+    if not os.path.exists(str(str(bids_path)[:-37] + 'results/')): 
+        os.makedirs(str(str(bids_path)[:-37] + 'results/'))
+
+    # save plot, 
+    # bbox_inches='tight' to keep title and labels
+    plt.savefig(str(str(bids_path)[:-37] + 'results/'+str(name)+'.png'),bbox_inches='tight')
+
     # don't display figure
     plt.close() 
 
