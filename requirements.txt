@@ -1,3 +1,7 @@
 mne
 osfclient
 mne-bids
+numpy
+scipy
+matplotlib
+os
