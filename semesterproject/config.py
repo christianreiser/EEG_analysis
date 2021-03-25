@@ -4,7 +4,7 @@ config parameters
 
 # subjects
 frist_subject = 1               # 1 first subject to run
-last_subject = 3                # 40 last subject to run
+last_subject = 1                # 40 last subject to run
 
 # downsample
 sfreq = 256                     # Hz
