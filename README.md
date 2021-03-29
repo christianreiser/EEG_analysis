@@ -4,6 +4,20 @@ Welcome to the practical part of the EEG course.
 - You can find the exercises in `./exercises`
 - Data and results will be saved to `./local` by default, but can be changed
 
+## Downsampling
+To speed up processing the data is downsampled from 1024.0 Hz to 256.0 Hz.
+
+## Rereferencing
+Before rereferencing a partial plot of the data looks the following:
+![](./local/bids/sub-002/ses-P3/results/000beforeRereferencing.png)  
+The data is rereferneced to P9 and P10 because [Kappenman et al.](https://www.sciencedirect.com/science/article/pii/S1053811920309502) find "that P9 and P10 provide cleaner signals than the traditional mastoid sites".  
+The rereferencing seems to work, as the variance of channel P9 and P10 decreased:
+![](./local/bids/sub-002/ses-P3/results/000rereferencedToP9P10.png)
+
+## Montage
+Set EEG sensor configuration and head digitization to the international 10–20 system, because it contains more [realistic](https://mne.tools/dev/auto_tutorials/intro/plot_40_sensor_locations.html) channel positions than a spherical head digitization.  
+![](./local/bids/sub-002/ses-P3/results/00montage.png)
+
 ## Filtering
 The raw data we get has a has all frequencies below 128 Hz:  
 ![](./local/bids/sub-002/ses-P3/results/01freq_before_filtering.png)
@@ -31,6 +45,20 @@ Raw:
 Filtered:  
 ![](./local/bids/sub-002/ses-P3/results/05zoom_filtered.png)  
 It looks good, as high frequcies seem to be supessed.
+
+## Cleaning
+By subjective manual visual inspection I removed all the breaks, aswell as noisy intervals. 
+In the next plots I try to show the most relevant cleaning parts. 
+However, if you want to see all data of the claning process, you can set ```closeInteractiveCleaningPlot``` in the ![config.py](./semesterproject/config.py) file to ```False``` to open an interactive plot.
+
+### Subject one
+Unfortunately, the variance ob subject one seems to increase significantly. Especially channel F8 but FP2, F4 and FC4, which are next to F8. I considered removing and interpolating F8, but decided not to do it, due to concerns that interpolating a very noisy channel with the help of other noisy channels might not increase the signal to noise ratio. Furthermore, F8 is an outmost channel which means interpolations becomes more like extrapolation with even more uncertainty in the signal.
+The plot below shows the noise of channel F8 and a very noisy interval.
+![](./local/bids/sub-001/ses-P3/results/050cleaning_data.png)  
+
+### Subject two
+Subject two sees pretty clean to me. I removed the breaks and only a few short intervals as it seems a bit more noisy or to oscillate more:
+![](./local/bids/sub-002/ses-P3/results/050cleaning_data.png)  
 
 ## ICA
 ![](./local/bids/sub-002/ses-P3/results/06ICA_components.png)

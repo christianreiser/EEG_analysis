@@ -2,9 +2,12 @@
 config parameters
 """
 
+#modmes
+closeInteractiveCleaningPlot = True  # hide interactive plots how manual cleaning was done
+
 # subjects
-frist_subject = 1               # 1 first subject to run
-last_subject = 1                # 40 last subject to run
+first_subject = 3               # 1 first subject to run
+last_subject = 3                # 40 last subject to run
 
 # downsample
 sfreq = 256                     # Hz
@@ -31,3 +34,28 @@ picked_channel_num = 13
 
 ref_channels = ['P9', 'P10']    # channels for rereferencing
 
+
+# ICA Artefacts
+# subject 1
+heart_sub1 = []
+blink_sub1 = [] #3
+eye_sub1 = [] # 0,1,2,6,24,29
+muscle_sub1 = [] # 5,7,10,13,16,18,21,23,28,29
+noisy_electrode_sub1 = []
+other_sub1 = []
+
+# subject 2
+heart_sub2 = []
+blink_sub2 = [0]
+eye_sub2 = []
+muscle_sub2 = [12,19,25]
+noisy_electrode_sub2 = [29]
+other_sub2 = [3, 7, 8, 22, 23]
+
+# subject 3
+heart_sub3 = []
+blink_sub3 = []
+eye_sub3 = []
+muscle_sub3 = []
+noisy_electrode_sub3 = []
+other_sub3 = []
