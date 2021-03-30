@@ -126,5 +126,15 @@ Second, I'm still hopeful that what looks like noise now can be cleaned in a bet
 ![](./results/sub-003/ses-P3/11Pz.png)
 
 ## Event-related potential (ERP)
+### Subject one
+![](./results/sub-001/ses-P3/12trials.png)
+![](./results/sub-001/ses-P3/13epochs_average.png)
+### Subject two
 ![](./results/sub-002/ses-P3/12trials.png)
 ![](./results/sub-002/ses-P3/13epochs_average.png)
+### Subject three
+![](./results/sub-003/ses-P3/12trials.png)
+![](./results/sub-003/ses-P3/13epochs_average.png)
+
+## inter subject analysis
+![](./intersubject_results/inter_subject_target_distractor_difference.png) inter_subject_target_distractor_difference
