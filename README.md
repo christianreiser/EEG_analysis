@@ -103,12 +103,28 @@ Second, I'm still hopeful that what looks like noise now can be cleaned in a bet
 
 
 ## ICA
+### Subject one
+![](./results/sub-001/ses-P3/06ICA_components.png)
+![](./results/sub-001/ses-P3/07ICA_properties/component0.png)
+![](./results/sub-001/ses-P3/08Pz_before_ICA.png)
+![](./results/sub-001/ses-P3/09Pz_after_ICA.png)
+![](./results/sub-001/ses-P3/10before_after_overlay.png)
+![](./results/sub-001/ses-P3/11Pz.png)
+### Subject two
 ![](./results/sub-002/ses-P3/06ICA_components.png)
 ![](./results/sub-002/ses-P3/07ICA_properties/component0.png)
 ![](./results/sub-002/ses-P3/08Pz_before_ICA.png)
 ![](./results/sub-002/ses-P3/09Pz_after_ICA.png)
 ![](./results/sub-002/ses-P3/10before_after_overlay.png)
 ![](./results/sub-002/ses-P3/11Pz.png)
+### Subject three
+![](./results/sub-003/ses-P3/06ICA_components.png)
+![](./results/sub-003/ses-P3/07ICA_properties/component0.png)
+![](./results/sub-003/ses-P3/08Pz_before_ICA.png)
+![](./results/sub-003/ses-P3/09Pz_after_ICA.png)
+![](./results/sub-003/ses-P3/10before_after_overlay.png)
+![](./results/sub-003/ses-P3/11Pz.png)
+
 ## Event-related potential (ERP)
 ![](./results/sub-002/ses-P3/12trials.png)
 ![](./results/sub-002/ses-P3/13epochs_average.png)

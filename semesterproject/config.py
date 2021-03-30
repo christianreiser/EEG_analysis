@@ -6,8 +6,8 @@ config parameters
 closeInteractiveCleaningPlot = True  # hide interactive plots how manual cleaning was done
 
 # subjects
-first_subject = 1               # 1 first subject to run
-last_subject = 1                # 40 last subject to run
+first_subject = 2               # 1 first subject to run
+last_subject = 3                # 40 last subject to run
 
 # downsample
 sfreq = 256                     # Hz
@@ -52,14 +52,16 @@ unsure_sub1 = [7,9,14,15,23]
 heart_sub2 = []
 blink_sub2 = [0]
 eye_sub2 = []
-muscle_sub2 = [12,19,25]
-noisy_electrode_sub2 = [29]
-other_sub2 = [3, 7, 8, 22, 23]
+muscle_sub2 = [15]
+noisy_electrode_sub2 = []
+other_sub2 = [3,6,23]
+unsure_sub2 = [1,3, 8,10,12,13,14,16,18,19,20,22,24,26,27]
 
 # subject 3
 heart_sub3 = []
-blink_sub3 = []
-eye_sub3 = []
-muscle_sub3 = []
+blink_sub3 = [0]
+eye_sub3 = [2]
+muscle_sub3 = [1,13]
 noisy_electrode_sub3 = []
-other_sub3 = []
+other_sub3 = [6,21,25]
+unsure_sub3 = [3,4,11,12,14,23,24,26]
