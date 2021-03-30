@@ -18,16 +18,16 @@ matplotlib.use('Agg')
 
 def save_plot(name, bids_path):
     """
-    saves the plot in './../local/results/'+str(name), instead of showing it
+    saves the plot in './results/sub-***/ses-P3/ instead of showing it
     creates the dir if not existent 
     """
     # create dir to save plots if not existent
-    if not os.path.exists(str(str(bids_path)[:-37] + 'results/')): 
-        os.makedirs(str(str(bids_path)[:-37] + 'results/'))
+    if not os.path.exists(str('./../results/' + str(bids_path)[14:-37])): 
+        os.makedirs(str('./../results/' + str(bids_path)[14:-37]))
 
     # save plot, 
     # bbox_inches='tight' to keep title and labels
-    plt.savefig(str(str(bids_path)[:-37] + 'results/'+str(name)+'.png'),bbox_inches='tight')
+    plt.savefig(str('./../results/' + str(bids_path)[14:-37]+str(name)+'.png'),bbox_inches='tight')
 
     # don't display figure
     plt.close() 
