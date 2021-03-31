@@ -1,8 +1,9 @@
 # EEG Preprocessing and analysis [WS2020]
-Welcome to the practical part of the EEG course.
-- You can find information on the semesterproject in `./semesterproject`
-- You can find the exercises in `./exercises`
-- Data and results will be saved to `./local` by default, but can be changed
+Welcome to my work of the EEG course. Even though it's technikally not a fork, it was forked from [Benjamin Ehingers eeg course](https://github.com/s-ccs/course_eeg_WS2020/).
+- This readme serves as documentation and presentation of the most important results
+- most code is in `./semesterproject/semesterproject.ipynb`
+- results are in `./results` and `./intersubject_results`
+- Save EEG data in the bids format in `./local` to avoid problems with the paths
 
 ## general info TODO
 units:
