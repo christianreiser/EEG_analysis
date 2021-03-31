@@ -1,14 +1,13 @@
-# EEG Preprocessing and analysis [WS2020]
+# EEG Preprocessing and analysis of P3 oddball experiments [WS2020]
 Welcome to my work of the EEG course. Even though it's technikally not a fork, it was forked from [Benjamin Ehingers eeg course](https://github.com/s-ccs/course_eeg_WS2020/).
 - This readme serves as documentation and presentation of the most important results
 - most code is in `./semesterproject/semesterproject.ipynb`
 - results are in `./results` and `./intersubject_results`
 - Save EEG data in the bids format in `./local` to avoid problems with the paths
 
-## general info TODO
-units:
-voltage potentials are described as "value", "amplitude", "potential" and if not noted otherwise the unit is µV  
-time is always in seconds
+## Units
+Units: voltage potentials are sometimes described as "value", "amplitude", "potential". The unit is µV, if not noted otherwise.  
+Usually, time is in seconds.
 
 ## Downsampling
 To speed up processing the data is downsampled from 1024.0 Hz to 256.0 Hz.
