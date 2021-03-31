@@ -159,5 +159,10 @@ amplitude_boxplot
 [statistics.csv](./intersubject_results/statistics.csv)  
 [all_subjects_time_amplitude.csv](./intersubject_results/all_subjects_time_amplitude.csv)  
 
+## Source Space Localization
+sensor_alignment  
+![sensor_alignment](./intersubject_results/sensor_alignment.png)  
+
+
 
 
