@@ -4,6 +4,11 @@ Welcome to the practical part of the EEG course.
 - You can find the exercises in `./exercises`
 - Data and results will be saved to `./local` by default, but can be changed
 
+## general info TODO
+units:
+voltage potentials are described as "value", "amplitude", "potential" and if not noted otherwise the unit is µV  
+time is always in seconds
+
 ## Downsampling
 To speed up processing the data is downsampled from 1024.0 Hz to 256.0 Hz.
 
@@ -116,14 +121,14 @@ Second, I'm still hopeful that what looks like noise now can be cleaned in a bet
 ![](./results/sub-002/ses-P3/08Pz_before_ICA.png)
 ![](./results/sub-002/ses-P3/09Pz_after_ICA.png)
 ![](./results/sub-002/ses-P3/10before_after_overlay.png)
-![](./results/sub-002/ses-P3/11Pz.png)
+![](./results/sub-002/ses-P3/11Pz.png)  
 ### Subject three
-![](./results/sub-003/ses-P3/06ICA_components.png)
-![](./results/sub-003/ses-P3/07ICA_properties/component0.png)
-![](./results/sub-003/ses-P3/08Pz_before_ICA.png)
-![](./results/sub-003/ses-P3/09Pz_after_ICA.png)
-![](./results/sub-003/ses-P3/10before_after_overlay.png)
-![](./results/sub-003/ses-P3/11Pz.png)
+![](./results/sub-003/ses-P3/06ICA_components.png)  
+![](./results/sub-003/ses-P3/07ICA_properties/component0.png)  
+![](./results/sub-003/ses-P3/08Pz_before_ICA.png)  
+![](./results/sub-003/ses-P3/09Pz_after_ICA.png)  
+![](./results/sub-003/ses-P3/10before_after_overlay.png)  
+![](./results/sub-003/ses-P3/11Pz.png)  
 
 ## Event-related potential (ERP)
 ### Subject one
@@ -133,8 +138,26 @@ Second, I'm still hopeful that what looks like noise now can be cleaned in a bet
 ![](./results/sub-002/ses-P3/12trials.png)
 ![](./results/sub-002/ses-P3/13epochs_average.png)
 ### Subject three
-![](./results/sub-003/ses-P3/12trials.png)
+![](./results/sub-003/ses-P3/12trials.png)  
 ![](./results/sub-003/ses-P3/13epochs_average.png)
 
+#
+TODO permutation test results??
+
 ## inter subject analysis
-![](./intersubject_results/inter_subject_target_distractor_difference.png) inter_subject_target_distractor_difference
+inter_subject_target_distractor_difference  
+![inter_subject_target_distractor_difference](./intersubject_results/inter_subject_target_distractor_difference.png)  
+peak_amplitude_distractor_vs_target  
+![peak_amplitude_distractor_vs_target](./intersubject_results/peak_amplitude_distractor_vs_target.png)  
+time_of_peak_distractor_vs_target  
+![time_of_peak_distractor_vs_target](./intersubject_results/time_of_peak_distractor_vs_target.png)  
+time_boxplot  
+![time_of_peak_distractor_vs_target](./intersubject_results/time_boxplot.png)  
+amplitude_boxplot  
+![amplitude_boxplot](./intersubject_results/amplitude_boxplot.png)  
+
+[statistics.csv](./intersubject_results/statistics.csv)  
+[all_subjects_time_amplitude.csv](./intersubject_results/all_subjects_time_amplitude.csv)  
+
+
+
