@@ -7,7 +7,7 @@ closeInteractiveCleaningPlot = True  # hide interactive plots how manual cleanin
 
 # subjects
 first_subject = 1               # 1 first subject to run
-last_subject = 6                # 40 last subject to run
+last_subject = 40                # 40 last subject to run
 
 # downsample
 sfreq = 256                     # Hz
@@ -43,10 +43,10 @@ rejection_threshold = 125e-6
 heart_sub1 = []
 blink_sub1 = [0] #3
 eye_sub1 = [13,17,25] # 0,1,2,6,24,29
-muscle_sub1 = [2,20,24] # 5,7,10,13,16,18,21,23,28,29
+muscle_sub1 = [2,9,20,24] # 5,7,10,13,16,18,21,23,28,29
 noisy_electrode_sub1 = []
 other_sub1 = [26,27]
-unsure_sub1 = [7,9,14,15,23]
+unsure_sub1 = [7,14,15,23]
 
 # subject 2
 heart_sub2 = []
