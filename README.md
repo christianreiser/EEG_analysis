@@ -1,5 +1,5 @@
 # EEG Preprocessing and analysis of P3 oddball experiments [WS2020]
-Welcome to my work of the EEG course. Even though it's technikally not a fork, it was forked from [Benjamin Ehingers eeg course](https://github.com/s-ccs/course_eeg_WS2020/).
+Welcome to my work on the EEG course. Even though it's technically not a fork, it was forked from [Benjamin Ehingers EEG course](https://github.com/s-ccs/course_eeg_WS2020/).
 - This readme serves as documentation and presentation of the most important results
 - most code is in `./semesterproject/semesterproject.ipynb`
 - results are in `./results` and `./intersubject_results`
@@ -13,23 +13,23 @@ Usually, time is in seconds.
 To speed up processing the data is downsampled from 1024.0 Hz to 256.0 Hz.
 
 ## Rereferencing
-Before rereferencing a partial plot of the data looks the following:
+Before rereferencing a partial plot of the data looks like:
 ![](./results/sub-002/ses-P3/000beforeRereferencing.png)  
 The data is rereferneced to P9 and P10 because [Kappenman et al.](https://www.sciencedirect.com/science/article/pii/S1053811920309502) find "that P9 and P10 provide cleaner signals than the traditional mastoid sites".  
 The rereferencing seems to work, as the variance of channel P9 and P10 decreased:
 ![](./results/sub-002/ses-P3/000rereferencedToP9P10.png)
 
 ## Montage
-Set EEG sensor configuration and head digitization to the international 10–20 system, because it contains more [realistic](https://mne.tools/dev/auto_tutorials/intro/plot_40_sensor_locations.html) channel positions than a spherical head digitization.  
+Set EEG sensor configuration and head digitization to the international 10–20 system, because it contains more [realistic](https://mne.tools/dev/auto_tutorials/intro/plot_40_sensor_locations.html) channel positions than spherical head digitization.  
 ![](./results/sub-002/ses-P3/00montage.png)
 
 ## Filtering
-The raw data we get has a has all frequencies below 128 Hz:  
+The raw data we get has all frequencies below 128 Hz:  
 ![](./results/sub-002/ses-P3/01freq_before_filtering.png)
 
 ### High-pass filtering
-We are less interested in very low frequncies, as they are often due to the drying of the EEG gel which increases resistance between the scull and electrodes. Low frequencies can be observed as a slow drift.
-As shown in the figure below, a high-pass filter of 0.1 Hz removes most slow drifts, aswell as the offset.
+We are less interested in very low frequencies, as they are often due to the drying of the EEG gel which increases the resistance between the skull and electrodes. Low frequencies can be observed as a slow drift.
+As shown in the figure below, a high-pass filter of 0.1 Hz removes most slow drifts, as well as the offset.
 However, there if drifts become stronger the drift is not corrected:  
 ![](./results/sub-006/ses-P3/03whole_overlay/channel15_drift_hp01.png)  
 Increasing the high-pass filter to 0.3 Hz seems to improve the problem:  
@@ -39,7 +39,7 @@ High-pass filtering with 0.4 Hz satisfies me:
 I didn't want to increase the frequency of the high-pass filter further, because [Widmann et al. show](https://www.sciencedirect.com/science/article/pii/S0165027014002866?via%3Dihub#sec0085) that a value of 0.75 might lead to minor reductions of the P3 response amplitude.
 
 ### Low-pass filtering
-The signal to noise ratio decreases with high frequencies. Reasons for this are, that noise due to the power line are at 60 Hz (in the US) and alpha, beta, delta and theta frequencies are below 30 Hz. 
+The signal-to-noise ratio decreases with high frequencies. Reasons for this are, that noise due to the power line is at 60 Hz (in the US) and alpha, beta, delta, and theta frequencies are below 30 Hz. 
 However, gamma frequencies are higher. In a compromise to keep low gamma frequencies but block noise from the powerline and noisy frequencies above that, a low-pass filter of 54 Hz is applied.  
 The frequency spectrum after band-pass filtering can be seen in the figure below.  
 ![](./results/sub-002/ses-P3/02freq_after_filtering.png)  
@@ -49,53 +49,53 @@ Raw:
 ![](./results/sub-002/ses-P3/04zoom_raw.png)  
 Filtered:  
 ![](./results/sub-002/ses-P3/05zoom_filtered.png)  
-It looks good, as high frequcies seem to be supessed.
+It looks good, as high frequencies seem to be suppressed.
 
 ## Cleaning
-By subjective manual visual inspection I removed all the breaks, aswell as noisy intervals. 
-In the next plots I try to show the most relevant cleaning parts. 
-However, if you want to see all data of the claning process, you can set ```closeInteractiveCleaningPlot``` in the [config.py](./semesterproject/config.py) file to ```False``` to open an interactive plot.
+By subjective manual visual inspection, I removed all the breaks, as well as noisy intervals. 
+In the next plots, I try to show the most relevant cleaning parts. 
+However, if you want to see all data of the cleaning process, you can set ```closeInteractiveCleaningPlot``` in the [config.py](./semesterproject/config.py) file to ```False``` to open an interactive plot.
 
 ### Manual cleaning
 #### Subject one
-Unfortunately, the variance ob subject one seems to increase significantly. Especially channel F8 but FP2, F4 and FC4, which are next to F8. I considered removing and interpolating F8, but decided not to do it, due to concerns that interpolating a very noisy channel with the help of other noisy channels might not increase the signal to noise ratio. Furthermore, F8 is an outmost channel which means interpolations becomes more like extrapolation with even more uncertainty in the signal.
+Unfortunately, the variance ob subject one seems to increase significantly. Especially channel F8 but FP2, F4, and FC4, which are next to F8. I considered removing and interpolating F8 but decided not to do it, due to concerns that interpolating a very noisy channel with the help of other noisy channels might not increase the signal-to-noise ratio. Furthermore, F8 is an outmost channel which means interpolations become more like extrapolation with even more uncertainty in the signal.
 The plot below shows the noise of channel F8 and a very noisy interval.
 ![](./results/sub-001/ses-P3/050cleaning_data.png)  
 
 If wanted, bad channels can be flagged in the function ```cleaning(raw_f, subject)``` by adding the channel name to the list ```raw_f.info["bads"] = []``` and removing the comment before ```raw_f.interpolate_bads()```. 
 
 #### Subject two
-Subject two seems pretty clean to me. I removed the breaks and only a few short intervals as it seems a bit more noisy or to oscillate more:
+Subject two seems pretty clean to me. I removed the breaks and only a few short intervals as it seems a bit noisier or to oscillate more:
 ![](./results/sub-002/ses-P3/050cleaning_data.png)  
 
 #### Subject three
 Subject three seems clean to me. 
 I only removed the breaks. 
-However, as can be seen in the plot below, there are spikes on channels close to the eyes about 300ms after the response. The magnitude of the spikes seem to be negatively correlated with the distance to the eyes.
+However, as can be seen in the plot below, there are spikes on channels close to the eyes about 300ms after the response. The magnitude of the spikes seems to be negatively correlated with the distance to the eyes.
 My guess is, that subject three blinked often right after responding. 
 If that is the case I expect to see it very clearly when inspecting the results of the ICA.
 For now, I will not remove the spikes manually, since the spikes are after most responses and if my guess is right, then it's better to remove them by removing the independent component of the blinks after ICA. 
 ![](./results/sub-003/ses-P3/050cleaning_data.png)  
 
 ### Automated threshold cleaning
-I also tried rejecting epochs based on the absolute difference between the lowest and the highest signal value (peak-to-peak signal amplitude). In each individual epoch, the peak-to-peak signal amplitude is calculated for every EEG and EOG channel. If the peak-to-peak signal amplitude of any one channel exceeds the rejection threshold, the respective epoch will be dropped.
+I also tried rejecting epochs based on the absolute difference between the lowest and the highest signal value (peak-to-peak signal amplitude). In each epoch, the peak-to-peak signal amplitude is calculated for every EEG and EOG channel. If the peak-to-peak signal amplitude of any one channel exceeds the rejection threshold, the respective epoch will be dropped.
 
 #### Subject one
-In the following plot you can see that manual cleaning seems lead to a better average ERP than automated rejection with a threshold of 200 µV. Automated rejection seems to hardly do anything:
+In the following plot, you can see that manual cleaning seems to lead to a better average ERP than automated rejection with a threshold of 200 µV. Automated rejection seems to hardly do anything:
 ![](./results/sub-001/ses-P3/05cleaning_compare_evoked_thresh_200.png)
 
-Maybe the treshold of 200 µV is too relaxed and I lowered tried 100 µV:
+Maybe the threshold of 200 µV is too relaxed and I lowered tried 100 µV:
 ![](./results/sub-001/ses-P3/05cleaning_compare_evoked_thresh_100.png)
 
-In the plot above, the 100 µV treshold seems too harsh, so I increased it to 125 µV:
+In the plot above, the 100 µV threshold seems too harsh, so I increased it to 125 µV:
 ![](./results/sub-001/ses-P3/05cleaning_compare_evoked_thresh_125.png)
 
-The threshold of 125 µV seems about right for subject one. This is the threshold I will also try for subject two and tree.
+The threshold of 125 µV seems about right for subject one. This is the threshold I will also try for subjects two and three.
 
 I was wondering how it looks like to apply both, manual and 125 µV threshold rejection:
 ![](./results/sub-001/ses-P3/05cleaning_compare_evoked_both_125.png)
-The me this seems to lead to the best ERP. 
-However, I'm not sure if it's good practive to adapt the procedure like this according to how the ERP looks like. Do I run the risk of cherry picking or overfitting?
+To me, this seems to lead to the best ERP. 
+However, I'm not sure if it's good practice to adapt the procedure like this according to how the ERP looks like. Do I run the risk of cherry-picking or overfitting?
 
 #### Subject two
 As shown in the plot below, manual or threshold cleaning had only a slight impact on the average ERP:
@@ -103,23 +103,23 @@ As shown in the plot below, manual or threshold cleaning had only a slight impac
 
 #### Subject three
 ![](./results/sub-003/ses-P3/05cleaning_compare_evoked.png)  
-The average ERP of subject three differes oviously differes between manual and rejection cleaning. The reason is probably that I didn't remove data even though there were many spikes after the responses of the subject.
+The average ERP of subject three obviously differs between manual and rejection cleaning. The reason is probably that I didn't remove data even though there were many spikes after the responses of the subject.
 Subject three lead me to the decision that I will not use automated rejection by a threshold and only reject manually due to two reasons:
 First, rejecting with a threshold had such a great impact, but did not lead to a satisfying average ERP.
 Second, I'm still hopeful that what looks like noise now can be cleaned in a better way by removing the unwanted (bink) components.
 
 ### Removing bad subjects
-I regard subject 1 to 3 as too valuable to remove them completely. 
+I regard subjects 1 to 3 as too valuable to remove them completely. 
 
 
 ## ICA
-ICA is sensitive to low-frequency drifts. Therefore I'm applying a high pass filter of 1.5 Hz to the data prior to fitting.
-Then I generate an ICA object. For conveiniene the random state is fixed to make it deterministic, thus reproducible.
-The ICA opject is fitted on the the cleaned data, where the 1.5Hz high pass filter was applied. 
+ICA is sensitive to low-frequency drifts. Therefore I'm applying a high pass filter of 1.5 Hz to the data before fitting.
+Then I generate an ICA object. For convenience the random state is fixed to make it deterministic, thus reproducible.
+The ICA object is fitted on the cleaned data, where the 1.5Hz high pass filter was applied. 
 The goal is to use ICA to break the signal of the different sensors into independent components.
 This is useful as we are only interested in brain components but also receive potentials from other sources. 
 These other sources are disturbing the analysis of brain signals, thus they are unwanted.
-The most common noise sources are muscle activity at or close to the head, eye blinks, eye movement, heart beat and noisy electrodes.  
+The most common noise sources are muscle activity at or close to the head, eye blinks, eye movement, heartbeat, and noisy electrodes.  
 Next, I will show how the ICA results of subject 001 look like and how I interpret them.
 
 ### Component inspection and classification
@@ -140,36 +140,36 @@ I classified componenet 001 as brain acitivy, and therefore didn't remove it. Th
 ![](./results/sub-001/ses-P3/07ICA_properties/component1.png)
 
 
-I classified componenet 002 as muscle artifacts, and therefore removed it. The reasons are:  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. The ERP segments seem to have two horizontal patterns spanning over multiple epochs. The first ranging from about Epoch 55 to 65 and the second starting at about Epoch 90 til the End. My guess is that maybe muscles were active during these epochs.  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. Most importantly, the Power spectrum increases looks like the mathematical root symbol, which is typical for muscle artifacts.  
+I classified component 002 as muscle artifacts, and therefore removed it. The reasons are:  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. The ERP segments seem to have two horizontal patterns spanning over multiple epochs. The first range from about Epoch 55 to 65 and the second starting at about Epoch 90 until the End. I guess that maybe muscles were active during these epochs.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. Most importantly, the Power spectrum increase looks like the mathematical root symbol, which is typical for muscle artifacts.  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. Since the sensor location map is colored at about 2 o'clock, it might be a muscle close to the right eyebrow. 
 ![](./results/sub-001/ses-P3/07ICA_properties/component2.png)
 015, 020 look similar:
 ![](./results/sub-001/ses-P3/07ICA_properties/component15.png)
 ![](./results/sub-001/ses-P3/07ICA_properties/component20.png)
 
-Component 003 has a very stong power around the 10 Hz frequency band, and another smaller bump close to 20 Hz, which indicates brain activity. Furthermore, the active area at the back of the head seems plausible for brain activity and the ERP segments are colored regularly. I did not remove this component.  
+Component 003 has a very strong power around the 10 Hz frequency band, and another smaller bump close to 20 Hz, which indicates brain activity. Furthermore, the active area at the back of the head seems plausible for brain activity and the ERP segments are colored regularly. I did not remove this component.  
 ![](./results/sub-001/ses-P3/07ICA_properties/component3.png)
 
 Component 004 looks very similar to 003, I labeled it also as brain activity.
 ![](./results/sub-001/ses-P3/07ICA_properties/component4.png)
 
-Similar to 003 but the peak in the power spectrum is at 10 and 20 Hz is smaller. Nevertheless, interpret it as brain acitivty and didn't remove it.
+Similar to 003 but the peak in the power spectrum is at 10 and 20 Hz is smaller. Nevertheless, interpret it as brain activity and didn't remove it.
 ![](./results/sub-001/ses-P3/07ICA_properties/component5.png)
 
 006 looks similar to 005, thus not removed.
 ![](./results/sub-001/ses-P3/07ICA_properties/component6.png)
 
-007 seems not sufficiently independent. I suspect brain activity due to a power peak at 10 Hz, but also muscle activity from about epoch 60 to 75. I wasn't sure weather to keep this component and labeled it as unsure, but removed it eventually. 
+007 seems not sufficiently independent. I suspect brain activity due to a power peak at 10 Hz, but also muscle activity from about epoch 60 to 75. I wasn't sure whether to keep this component and labeled it as unsure but removed it eventually.   
 ![](./results/sub-001/ses-P3/07ICA_properties/component7.png)
-Similarly looks 23, 24, 26, 27. Maybe, the ICA didn't work properly. However, increasing the maximum number of iterations from default 200 to 400 didn't help. Future work I would try lowering the highpass-filter to 1 Hz or increasing it to 2Hz, and see if s.th. the separation into independednt component improves.
+Similarly looks 23, 24, 26, 27. Maybe, the ICA didn't work properly. However, increasing the maximum number of iterations from default 200 to 400 didn't help. For future work, I would try lowering the highpass-filter to 1 Hz or increasing it to 2Hz and see if s.th. the separation into independent components improves.
 ![](./results/sub-001/ses-P3/07ICA_properties/component23.png)
 ![](./results/sub-001/ses-P3/07ICA_properties/component24.png)
 ![](./results/sub-001/ses-P3/07ICA_properties/component26.png)
 ![](./results/sub-001/ses-P3/07ICA_properties/component27.png)
 
-Similar to component 002 this looks like a muscle artefact.
+Similar to component 002 this looks like a muscle artifact.
 ![](./results/sub-001/ses-P3/07ICA_properties/component9.png)
 
 Due to power peak at 10 Hz and homogenious ERP Segments, I labeled components 008, 010, 011, 012, 016, 018, 19, 21,22 as brain activity. 
@@ -183,7 +183,7 @@ Due to power peak at 10 Hz and homogenious ERP Segments, I labeled components 00
 ![](./results/sub-001/ses-P3/07ICA_properties/component21.png)
 ![](./results/sub-001/ses-P3/07ICA_properties/component22.png)
 
-I was unsure about component 14, 25 and labeled it as unsure. Spectrum does not look like brain activity. Maybe heart activity? 
+I was unsure about components 14, 25 and labeled them as unsure. Spectrum does not look like brain activity. Maybe heart activity?   
 ![](./results/sub-001/ses-P3/07ICA_properties/component14.png)
 ![](./results/sub-001/ses-P3/07ICA_properties/component25.png)
 
@@ -199,7 +199,7 @@ i.e. ICA000 seems to be blinks and ICA 007 brain activity.
 
 
 #### Subject 3 blinks
-In the chapter cleaning I made the guess that subject 3 blinked a lot, but didn't remove the sequences from the data. 
+In the chapter cleaning, I made the guess that subject 3 blinked a lot but didn't remove the sequences from the data. 
 This was probably a good choice: As you can see below, ICA000 represent certainly eye blinks. 
 Furthermore, 004 and 026 seem to be eye components as well. 
 Now, I can remove these components without rejecting whole sequences. 
@@ -209,20 +209,20 @@ Now, I can remove these components without rejecting whole sequences.
 ![](./results/sub-003/ses-P3/06ICA_components.png)  
 
 #### Summary and file
-The component interpretation and classification I described above is summaized in the [file config.py](./semesterproject/config.py). This file also includes my classification of subject 2 and 3, and it functions as a configuration interface to the code. 
+The component interpretation and classification I described above are summarized in the [file config.py](./semesterproject/config.py). This file also includes my classification of subjects 2 and 3, and it functions as a configuration interface to the code. 
 
 
 ### Effect of ICA
-After classifying the artefacts to remove, I took a copy of the original filtered signal, where the band-pass filter is between 0.4 and 54 Hz, and not 1.5 and 54 Hz.
-I applied the ICA on this signal, excluding the unwanted unwanted independent components.
-To evaluate it's effect, I'm visualizing the difference on baseline adjusted epochs.
+After classifying the artifacts to remove, I took a copy of the original filtered signal, where the band-pass filter is between 0.4 and 54 Hz, and not 1.5 and 54 Hz.
+I applied the ICA on this signal, excluding the unwanted independent components.
+To evaluate its effect, I'm visualizing the difference on baseline adjusted epochs.
 [The file config.py](./semesterproject/config.py) defines epochs from starting from -0.2 til 0.8 sec and the baseline from -0.2 til 0.0 sec. 
 
 #### Subject 1
 The effect of the removed components is shown below. Note how the original signals (red) have more spikes and variance than the signal without the unwanted components from ICA.   
 ![](./results/sub-001/ses-P3/10before_after_overlay.png)  
 
-Surprisingly, the effect on the evoked data of the Pz channel seems neglectable. I can spot only a tiny difference. I was wondering if s.th. is wrong but could not find a bug. But maybe it's correct, as you will see later, the difference at subject 2 and 3 is greater.  
+Surprisingly, the effect on the evoked data of the Pz channel seems neglectable. I can spot only a tiny difference. I was wondering if s.th. is wrong but could not find a bug. But maybe it's correct, as you will see later, the difference between subjects 2 and 3 is greater.  
 
 Evoked Pz before removing labeled components:  
 ![](./results/sub-001/ses-P3/08Pz_before_ICA.png)  
@@ -249,8 +249,8 @@ Evoked Pz after removing labeled components of subject 3:
 
 ## Event-related potential (ERP)
 ### Single Subject Analysis
-We cleaned the signal to better analyze the P300 ERP, during visual oddbal experiments.
-Specifically I want to analyze the voltage and latency difference between target distractor stimuli.
+We cleaned the signal to better analyze the P300 ERP, during visual oddball experiments.
+Specifically, I want to analyze the voltage and latency difference between target-distractor stimuli.
 As recommended by [Kappenman et al.](https://www.sciencedirect.com/science/article/pii/S1053811920309502), I work mainly with the Pz channel for the P3 oddball experiment.
 The coded functions which analyze the ERP of only one subject are defined in ```single_subject_erp_analysis()```
 
@@ -261,19 +261,19 @@ The evoked Pz signals are plotted below:
 ![](./results/sub-001/ses-P3/13epochs_average.png)
 
 ### Subject two
-Let's to a sanity check: The baseline oscillates a lot, but is centered at 0 µV. Both for target and distractor, there is a rapid spike starting at about 130 ms after Stimulus, peaks at around 180 ms has a local minimum at 230ms. The distractor peaks at around 300ms  and target at 430 ms. This doesn't seem too bad but compared to [Kappenman et al.](https://www.sciencedirect.com/science/article/pii/S1053811920309502) it's ~30ms later. This might be, since I didn't do any time shift due to screen/electronic latency. [Kappenman et al.](https://www.sciencedirect.com/science/article/pii/S1053811920309502), shiftet the time by 26 ms. The might explain the difference between us almost too well.
-It's visible, that the target peak is higher (20µV) and later than the distractor peak (10µV), compared to 7 and 13 for [Kappenman et al.](https://www.sciencedirect.com/science/article/pii/S1053811920309502). After peaking, the potential decreases again, and is back at the baseline a bit before 800ms. This is also similar to Kappenman et al. .  
+Let's to a sanity check: The baseline oscillates a lot but is centered at 0 µV. Both for target and distractor, there is a rapid spike starting at about 130 ms after Stimulus, peaks at around 180 ms have a local minimum at 230ms. The distractor peaks at around 300ms  and target at 430 ms. This doesn't seem too bad but compared to [Kappenman et al.](https://www.sciencedirect.com/science/article/pii/S1053811920309502) it's ~30ms later. This might be since I didn't do any time shift due to screen/electronic latency. [Kappenman et al.](https://www.sciencedirect.com/science/article/pii/S1053811920309502), shiftet the time by 26 ms. The might explain the difference between us almost too well.
+It's visible, that the target peak is higher (20µV) and later than the distractor peak (10µV), compared to 7 and 13 for [Kappenman et al.](https://www.sciencedirect.com/science/article/pii/S1053811920309502). After peaking, the potential decreases again and is back at the baseline a bit before 800ms. This is also similar to Kappenman et al..  
 ![](./results/sub-002/ses-P3/13epochs_average.png)
 ### Subject three
-The evoked signals looks surprisingly different between each subject. I wonder if cleaning was not optimal, the brains are different, or it's normal variance due to a small amount of target epochs per subject:  
+The evoked signals look surprisingly different between each subject. I wonder if cleaning was not optimal, the brains are different, or it's normal variance due to a small number of target epochs per subject:  
 ![](./results/sub-003/ses-P3/13epochs_average.png)  
 
 
 
 ### Inter subject analysis
-For each subject I recorded the average evoked signal, peak potential and peak latency, for next chapters inter subject analysis.
-I put the data of my last run below. If you want to reproduce my results its saved in: [all_subjects_time_amplitude.csv](./intersubject_results/all_subjects_time_amplitude.csv).
-You can have a look at the data, but I like visulaizations, which follow after, much more :)
+For each subject, I recorded the average evoked signal, peak potential, and peak latency, for the next chapter inter-subject analysis.
+I put the data of my last run below. If you want to reproduce my results they are saved in [all_subjects_time_amplitude.csv](./intersubject_results/all_subjects_time_amplitude.csv).
+You can have a look at the data, but I like visualization, which follows after, much more :)
 
 |subject_id|time_target|time distr|amplitude_target|amplitude_distractor|diff_time  |diff_amplitude      |
 |----------|----------------|--------------------|---------------------|-------------------------|-----------|--------------------|
@@ -339,7 +339,7 @@ Data about statistics below and saved in [statistics.csv](./intersubject_results
 
 
 
-The plot below shows the average of target evoked, distractor evoked, and the difference of these two:  
+The plot below shows the average of target evoked, distractor evoked, and the difference between these two:  
 ![inter_subject_target_distractor_difference](./intersubject_results/inter_subject_target_distractor_difference.png)  
 Let's compare this plot to [Kappenman et al.](https://www.sciencedirect.com/science/article/pii/S1053811920309502):  
 
@@ -347,7 +347,7 @@ Let's compare this plot to [Kappenman et al.](https://www.sciencedirect.com/scie
 |                   | My work | Kappenmann et al. |
 |-----------------------|---------|-------------------|
 | time first local min  | 140     | 100               |
-| time frist local max  | 175     | 150               |
+| time first local max  | 175     | 150               |
 | time second local min | 215     | 190               |
 | time distr peak       | 510     | 410               |
 
@@ -356,16 +356,16 @@ Let's compare this plot to [Kappenman et al.](https://www.sciencedirect.com/scie
 If I would also reduce the 26ms screen delay, the numbers match surprisingly well. 
 
 
-The next plot shows peak amplitude of the distractor vs amplitude of the target. Note that most points are below the first bisector.
-Since the x axis is about target and y about distractor, this indicates that most target peaks are stronger than distractor peaks.   
+The next plot shows the peak amplitude of the distractor vs the amplitude of the target. Note that most points are below the first bisector.
+Since the x-axis is about target and y about distractor, this indicates that most target peaks are stronger than distractor peaks.   
 ![peak_amplitude_distractor_vs_target](./intersubject_results/peak_amplitude_distractor_vs_target.png)  
 
-I plotted the same visulization again, but this time for the timepoint of the peak instead of amplitude:  
+I plotted the same visualization again, but this time for the time point of the peak instead of amplitude:  
 ![time_of_peak_distractor_vs_target](./intersubject_results/time_of_peak_distractor_vs_target.png)  
-The result looks similar: Most points are below the first bisector, indicating target peaks occure later than distractor peaks.  
+The result looks similar: Most points are below the first bisector, indicating target peaks occur later than distractor peaks.  
 
 
-The next plot visualizes extrema, quartiles and mean for the time of the peak of target, distractore evokeds and the difference.
+The next plot visualizes extrema, quartiles, and mean for the time of the peak of target, distractor evoked, and the difference.
 The difference seems to be relatively small. I wonder if the difference is significant. I will test that later on.  
 ![time_of_peak_distractor_vs_target](./intersubject_results/time_boxplot.png)  
 
@@ -380,7 +380,7 @@ Here, a difference is clearly visible.
 Let's do a permutation test to see if there is a significant difference between target and distractor readings.
 First comes a permutation test, where the H0 hypothesis is that there is no difference between target and distractor peak time:  
 ![permutation_time](./intersubject_results/permutation_time.png)  
-I am very surprised, as the difference at the boxplot seemed negledgeable, but the computet p-value is an amazing 0.000.
+I am very surprised, as the difference at the boxplot seemed negligible, but the computed p-value is an amazing 0.000.
 I guess s.th. is wrong with my application of the permutation test :(    
 
 Permutation test, where the H0 hypothesis is that there is no difference between target and distractor peak voltage:  
@@ -390,10 +390,10 @@ Here it does not surprise me, that the difference is very significant, as the bo
 
 
 ## Source Space Localization
-To project the EEG/MEG sensor data into a 3-dimensional ‘source space’ positioned in the subject’s brain anatomy with high accuracy, individual maps of the subjects brain anatomy and sensor location is needed.
-Unfortunatlely, we don't have any individual information about the anatomy and an average anatomy is assumed.
+To project the EEG/MEG sensor data into a 3-dimensional ‘source space’ positioned in the subject’s brain anatomy with high accuracy, individual maps of the subject's brain anatomy and sensor location are needed.
+Unfortunately, we don't have any individual information about the anatomy and average anatomy is assumed.
 Source reconstruction without an individual T1 MRI from the subject will be less accurate.
-This entails, that we should not over interpret activity locations which can be off by multiple centimeters. 
+This entails, that we should not over-interpret activity locations which can be off by multiple centimeters. 
 The average src and bem are taken from the following [tutorial](https://mne.tools/stable/auto_tutorials/source-modeling/plot_eeg_no_mri.html).
 
 Let's check the sensor alignment on our average anatomy. It looks good in the figure below:  
@@ -403,7 +403,7 @@ Estimate noise covariance matrix from epochs:
 ![noise_covariance_manual](./intersubject_results/noise_covariance_manual.png)  
 ![noise_covariance_manual2](./intersubject_results/noise_covariance_manual2.png)  
 
-butterfly_before_source_space_manual  
+butterfly plot does not seem right.  
 ![butterfly_before_source_space_manual](./intersubject_results/butterfly_before_source_space_manual.png)  
 
   
