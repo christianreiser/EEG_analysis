@@ -406,6 +406,11 @@ Estimate noise covariance matrix from epochs:
 butterfly plot does not seem right.  
 ![butterfly_before_source_space_manual](./intersubject_results/butterfly_before_source_space_manual.png)  
 
-  
+
+Calculate a forward solution for a subject.  
+Estimate noise covariance matrix from epochs.  
+Assemble inverse operator.  
+Apply inverse operator to evoked data.  
+Plot source space  
 
 
