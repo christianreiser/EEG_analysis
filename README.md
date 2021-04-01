@@ -31,9 +31,9 @@ The raw data we get has all frequencies below 128 Hz:
 We are less interested in very low frequencies, as they are often due to the drying of the EEG gel which increases the resistance between the skull and electrodes. Low frequencies can be observed as a slow drift.
 As shown in the figure below, a high-pass filter of 0.1 Hz removes most slow drifts, as well as the offset.
 However, there if drifts become stronger the drift is not corrected:  
-![](./results/sub-006/ses-P3/03whole_overlay/channel15_drift_hp01.png)  
+![](./results/sub-002/ses-P3/03whole_overlay/channel15_drift_hp01.png)  
 Increasing the high-pass filter to 0.3 Hz seems to improve the problem:  
-![](./results/sub-006/ses-P3/03whole_overlay/channel15_drift_hp03.png)  
+![](./results/sub-002/ses-P3/03whole_overlay/channel15_drift_hp03.png)  
 High-pass filtering with 0.4 Hz satisfies me:  
 ![](./results/sub-006/ses-P3/03whole_overlay/channel15_drift_hp04.png)  
 I didn't want to increase the frequency of the high-pass filter further, because [Widmann et al. show](https://www.sciencedirect.com/science/article/pii/S0165027014002866?via%3Dihub#sec0085) that a value of 0.75 might lead to minor reductions of the P3 response amplitude.
